@@ -19,4 +19,14 @@ class Cliente extends Model
     protected $hidden = [
         '_token',
     ];
+
+    public function getDocumentoAttribute()
+    {
+        return vsprintf("%s%s%s.%s%s%s.%s%s%s-%s%s", str_split($this->attributes['documento']));
+    }
+
+    public function endereco()
+    {
+        return $this->hasOne(Endereco::class,'cliente_id','id');
+    }
 }

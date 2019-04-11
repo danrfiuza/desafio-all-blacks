@@ -12,3 +12,4 @@
 */
 
 Route::get('/', 'ClienteController@index');
+Route::post('listajson', 'ClienteController@listaClientesJson');

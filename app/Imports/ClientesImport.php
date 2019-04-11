@@ -47,7 +47,7 @@ class ClientesImport implements ToCollection,WithHeadingRow,WithProgressBar
                 'cidade' => $row['cidade'],
                 'uf' => $row['uf'],
             ]);
-            return $row;
         }
+        return $row;
     }
 }
