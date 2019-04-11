@@ -4,16 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Cliente extends Model
+class Cidade extends Model
 {
     public $timestamps = true;
-    public $table = 'clientes';
+    public $table = 'cidades';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'nome',
-        'documento',
-        'telefone',
-        'email',
+        'uf',
+        'cidade',
+        'endereco',
         'ativo'
     ];
     protected $hidden = [
