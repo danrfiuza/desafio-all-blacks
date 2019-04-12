@@ -90,7 +90,6 @@
 
         $(document).on('click', '.editar', function() {
             let id = $(this).attr('id');
-            console.log(id);
             $.get(`cliente/${id}`)
                 .done((res) => {
                     $('.modal-title').html('Editar');

@@ -1,6 +1,6 @@
 <form id="form-cliente">
-    <input type="hidden" name="cliente_id" value="{{$cliente->id}}" />
-    <input type="hidden" name="endereco_id" value="{{$endereco->id}}" />
+    <input type="hidden" name="cliente_id" value="{{$cliente->id}}"/>
+    <input type="hidden" name="endereco_id" value="{{$endereco->id}}"/>
     {{csrf_field()}}
     <div class="form-group">
         <h3 class="bd-title">Dados do Pessoais</h3>
@@ -10,9 +10,11 @@
                 class="form-control form-control-sm"
                 id="nome"
                 placeholder="Informe nome"
-                name="email"
+                name="nome"
                 value="{{$cliente->nome}}"
         />
+        <div class="invalid-feedback" id="erros-nome">
+        </div>
     </div>
 
     <div class="form-group">
@@ -25,6 +27,8 @@
                 name="email"
                 value="{{$cliente->email}}"
         >
+        <div class="invalid-feedback" id="erros-email">
+        </div>
     </div>
 
     <div class="form-group">
@@ -36,7 +40,9 @@
                 placeholder="Informe documento"
                 name="documento"
                 value="{{$cliente->documento}}"
-        >
+        />
+        <div class="invalid-feedback" id="erros-documento">
+        </div>
     </div>
 
     <div class="form-group">
@@ -48,7 +54,9 @@
                 placeholder="Informe telefone"
                 name="telefone"
                 value="{{$cliente->telefone}}"
-        >
+        />
+        <div class="invalid-feedback" id="erros-telefone">
+        </div>
     </div>
     <hr>
 
@@ -63,7 +71,9 @@
                 placeholder="Informe Unidade Federativa"
                 name="uf"
                 value="{{$endereco->uf}}"
-        >
+        />
+        <div class="invalid-feedback" id="erros-uf">
+        </div>
     </div>
 
     <div class="form-group">
@@ -75,7 +85,9 @@
                 placeholder="Informe Cidade"
                 name="cidade"
                 value="{{$endereco->cidade}}"
-        >
+        />
+        <div class="invalid-feedback" id="erros-cidade">
+        </div>
     </div>
 
     <div class="form-group">
@@ -87,7 +99,9 @@
                 placeholder="Informe CEP"
                 name="cep"
                 value="{{$endereco->cep}}"
-        >
+        />
+        <div class="invalid-feedback" id="erros-cep">
+        </div>
     </div>
 
     <div class="form-group">
@@ -99,10 +113,12 @@
                 placeholder="Informe Endereço"
                 name="endereco"
                 value="{{$endereco->endereco}}"
-        >
+        />
+        <div class="invalid-feedback" id="erros-endereco">
+        </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group ">
         <label for="bairro">Bairro</label>
         <input
                 type="text"
@@ -111,22 +127,44 @@
                 placeholder="Informe Bairro"
                 name="bairro"
                 value="{{$endereco->bairro}}"
-        >
+        />
+        <div class="invalid-feedback" id="erros-bairro">
+        </div>
     </div>
 
     <button type="submit" class="btn btn-primary" id="btn-salvar-cliente">Submit</button>
 </form>
 <script>
     $('#btn-salvar-cliente').on('click', (evt) => {
-        let cliente_id = $('[name=cliente_id]').val();
         evt.preventDefault();
-        let form = $('#form-cliente').serialize();
+
+        let form = $('#form-cliente');
+
         $.ajax({
             type: 'POST',
-            data: form,
-            url: `cliente/salvar`
+            data: form.serialize(),
+            url: 'cliente/salvar',
+            dataType: 'application/json'
         }).done((res) => {
-            console.log(res);
+            form.find('input').removeClass('is-invalid');
+
+        }).fail((jqXHR) => {
+
+            let response = JSON.parse(jqXHR.responseText);
+            form.find('input').removeClass('is-invalid');
+            $.each(response.errors, (campo, erros) => {
+
+                let input = form.find(`[name=${campo}]`);
+                input.addClass('is-invalid');
+                $(`#erros-${campo}`).html('');
+                $.each(erros, function (index, value) {
+
+                    $(`#erros-${campo}`).append(`<p>${value}</p>`);
+
+                });
+
+            });
+
         });
 
     });

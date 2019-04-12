@@ -20,7 +20,7 @@ class importarClientesCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Importa dados contidos na planilha clientes.xlsx e normaliza para as tabelas clientes e endereços';
+    protected $description = 'Importa dados contidos na planilha clientes.xlsx e normaliza para as tabelas clientes e endereï¿½os';
 
     /**
      * Create a new command instance.

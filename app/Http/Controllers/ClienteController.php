@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cliente;
+use App\Http\Requests\ClienteRequest;
 use Illuminate\Http\Request;
 
 class ClienteController extends Controller
@@ -36,16 +37,16 @@ class ClienteController extends Controller
             ->orderBy($order, $dir)
             ->select($columns);
 
-            if (!empty($search)) {
-                $clienteQuery->where('id','LIKE',"%{$search}%")
-                    ->orWhere('nome', 'LIKE',"%{$search}%")
-                    ->orWhere('email', 'LIKE',"%{$search}%");
+        if (!empty($search)) {
+            $clienteQuery->where('id', 'LIKE', "%{$search}%")
+                ->orWhere('nome', 'LIKE', "%{$search}%")
+                ->orWhere('email', 'LIKE', "%{$search}%");
 
-                $totalFiltered = Cliente::where('id','LIKE',"%{$search}%")
-                    ->orWhere('nome', 'LIKE',"%{$search}%")
-                    ->orWhere('email', 'LIKE',"%{$search}%")
-                    ->count();
-            }
+            $totalFiltered = Cliente::where('id', 'LIKE', "%{$search}%")
+                ->orWhere('nome', 'LIKE', "%{$search}%")
+                ->orWhere('email', 'LIKE', "%{$search}%")
+                ->count();
+        }
         $clientes = $clienteQuery->get();
 
 
@@ -53,11 +54,10 @@ class ClienteController extends Controller
             "draw" => intval($request->input('draw')),
             "recordsTotal" => intval($totalData),
             "recordsFiltered" => intval($totalFiltered),
-            "data" => (!empty($clientes)?$clientes:[])
+            "data" => (!empty($clientes) ? $clientes : [])
         );
 
-        echo json_encode($json_data);
-
+        return response()->json($json_data);
     }
 
     /**
@@ -77,9 +77,9 @@ class ClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ClienteRequest $request)
     {
-        dd($request);
+        return response()->json($request);
     }
 
     /**
@@ -113,13 +113,13 @@ class ClienteController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Cliente             $cliente
+     * @param  \App\Cliente $cliente
      *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Cliente $cliente)
     {
-        dd($request,$cliente);
+        dd($request, $cliente);
     }
 
     /**

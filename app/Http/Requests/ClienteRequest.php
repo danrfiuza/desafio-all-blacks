@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Request;
 
 class ClienteRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class ClienteRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +24,39 @@ class ClienteRequest extends FormRequest
      */
     public function rules()
     {
+        $this->sanitize();
+
+        $cliente_id = Request::get('cliente_id');
         return [
-            //
+            'cliente_id' => '',
+            'endereco_id' => '',
+            'nome' => 'required',
+            'email' =>'required|unique:clientes,email'.($cliente_id ? ",$cliente_id,id" : ''),
+            'documento' => 'required',
+            'telefone' => '',
+            'uf' => '',
+            'cidade' => '',
+            'cep' => '',
+            'endereco' => '',
+            'bairro' => ''
+        ];
+    }
+
+    public function sanitize()
+    {
+        $input = $this->all();
+
+        $input['documento'] = str_replace(['.','-'],['',''],$input['documento']);
+
+        $this->replace($input);
+    }
+
+    public function messages()
+    {
+        return [
+            'nome.required'  => 'Campo Nome é obrigatório',
+            'email.required' => 'Campo E-mail é obrigatório',
+            'documento.required' => 'Campo Documento é obrigatório',
         ];
     }
 }
