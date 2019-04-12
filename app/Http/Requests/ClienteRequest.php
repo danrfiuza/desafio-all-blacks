@@ -45,9 +45,7 @@ class ClienteRequest extends FormRequest
     public function sanitize()
     {
         $input = $this->all();
-
         $input['documento'] = str_replace(['.','-'],['',''],$input['documento']);
-
         $this->replace($input);
     }
 
@@ -56,6 +54,7 @@ class ClienteRequest extends FormRequest
         return [
             'nome.required'  => 'Campo Nome é obrigatório',
             'email.required' => 'Campo E-mail é obrigatório',
+            'email.unique'   => 'E-mail já cadastrado.',
             'documento.required' => 'Campo Documento é obrigatório',
         ];
     }

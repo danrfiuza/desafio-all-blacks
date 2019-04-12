@@ -1,6 +1,6 @@
 <form id="form-cliente">
-    <input type="hidden" name="cliente_id" value="{{$cliente->id}}"/>
-    <input type="hidden" name="endereco_id" value="{{$endereco->id}}"/>
+    <input type="hidden" name="cliente_id" value="{{($cliente->id??'')}}"/>
+    <input type="hidden" name="endereco_id" value="{{$endereco->id??''}}"/>
     {{csrf_field()}}
     <div class="form-group">
         <h3 class="bd-title">Dados do Pessoais</h3>
@@ -11,7 +11,7 @@
                 id="nome"
                 placeholder="Informe nome"
                 name="nome"
-                value="{{$cliente->nome}}"
+                value="{{$cliente->nome??''}}"
         />
         <div class="invalid-feedback" id="erros-nome">
         </div>
@@ -22,11 +22,11 @@
         <input
                 type="email"
                 class="form-control form-control-sm"
-                id=""
+                id="email"
                 placeholder="Informe email"
                 name="email"
-                value="{{$cliente->email}}"
-        >
+                value="{{$cliente->email??''}}"
+        />
         <div class="invalid-feedback" id="erros-email">
         </div>
     </div>
@@ -39,7 +39,7 @@
                 id="documento"
                 placeholder="Informe documento"
                 name="documento"
-                value="{{$cliente->documento}}"
+                value="{{$cliente->documento??''}}"
         />
         <div class="invalid-feedback" id="erros-documento">
         </div>
@@ -53,7 +53,7 @@
                 id="telefone"
                 placeholder="Informe telefone"
                 name="telefone"
-                value="{{$cliente->telefone}}"
+                value="{{$cliente->telefone??''}}"
         />
         <div class="invalid-feedback" id="erros-telefone">
         </div>
@@ -70,7 +70,7 @@
                 id="uf"
                 placeholder="Informe Unidade Federativa"
                 name="uf"
-                value="{{$endereco->uf}}"
+                value="{{$endereco->uf??''}}"
         />
         <div class="invalid-feedback" id="erros-uf">
         </div>
@@ -84,7 +84,7 @@
                 id="uf"
                 placeholder="Informe Cidade"
                 name="cidade"
-                value="{{$endereco->cidade}}"
+                value="{{$endereco->cidade??''}}"
         />
         <div class="invalid-feedback" id="erros-cidade">
         </div>
@@ -98,7 +98,7 @@
                 id="cep"
                 placeholder="Informe CEP"
                 name="cep"
-                value="{{$endereco->cep}}"
+                value="{{$endereco->cep??''}}"
         />
         <div class="invalid-feedback" id="erros-cep">
         </div>
@@ -112,7 +112,7 @@
                 id="endereco"
                 placeholder="Informe Endereço"
                 name="endereco"
-                value="{{$endereco->endereco}}"
+                value="{{$endereco->endereco??''}}"
         />
         <div class="invalid-feedback" id="erros-endereco">
         </div>
@@ -126,7 +126,7 @@
                 id="bairro"
                 placeholder="Informe Bairro"
                 name="bairro"
-                value="{{$endereco->bairro}}"
+                value="{{$endereco->bairro??''}}"
         />
         <div class="invalid-feedback" id="erros-bairro">
         </div>
@@ -135,7 +135,7 @@
     <button type="submit" class="btn btn-primary" id="btn-salvar-cliente">Submit</button>
 </form>
 <script>
-    $('#btn-salvar-cliente').on('click', (evt) => {
+    $('#btn-salvar-cliente').on('click', function (evt) {
         evt.preventDefault();
 
         let form = $('#form-cliente');
@@ -143,12 +143,18 @@
         $.ajax({
             type: 'POST',
             data: form.serialize(),
-            url: 'cliente/salvar',
-            dataType: 'application/json'
-        }).done((res) => {
+            url: 'cliente/salvar'
+        }).then(res => {
+            $('.modal').modal('hide');
+            carregarListagem();
+            Swal.fire(
+                '',
+                'Torcedor salvo com sucesso.',
+                'success'
+            );
             form.find('input').removeClass('is-invalid');
 
-        }).fail((jqXHR) => {
+        }).catch((jqXHR) => {
 
             let response = JSON.parse(jqXHR.responseText);
             form.find('input').removeClass('is-invalid');
@@ -157,7 +163,7 @@
                 let input = form.find(`[name=${campo}]`);
                 input.addClass('is-invalid');
                 $(`#erros-${campo}`).html('');
-                $.each(erros, function (index, value) {
+                $.each(erros, (index, value) => {
 
                     $(`#erros-${campo}`).append(`<p>${value}</p>`);
 

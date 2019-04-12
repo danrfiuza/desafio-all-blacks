@@ -1,6 +1,15 @@
 @extends('template.principal')
 @section('main')
     <h1 class="bd-title" id="content">Lista de Torcedores</h1>
+    <button
+            class="btn btn-success"
+            data-toggle="modal"
+            data-target=".bd-example-modal-lg"
+            id="btn-incluir"
+    >
+        <i class="fas fa-plus"></i>
+    </button>
+
     <div class="table-responsive">
 
         <table class="table table-dark table-bordered table-hover table table-sm" id="torcedores">
@@ -88,7 +97,7 @@
             });
         }
 
-        $(document).on('click', '.editar', function() {
+        $(document).on('click', '.editar', function () {
             let id = $(this).attr('id');
             $.get(`cliente/${id}`)
                 .done((res) => {
@@ -99,6 +108,14 @@
 
         $(document).on('click', '.remover', function () {
             console.log($(this).attr('id'));
+        });
+
+        $('#btn-incluir').click(() => {
+            $.get('novo')
+                .done((res) => {
+                    $('.modal-title').html('Incluir');
+                    $('.modal-body').html(res);
+                });
         });
 
         $('.modal').on('hidden.bs.modal', function () {

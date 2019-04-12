@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cliente;
+use App\Endereco;
 use App\Http\Requests\ClienteRequest;
 use Illuminate\Http\Request;
 
@@ -67,7 +68,16 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        //
+
+    }
+
+    public function formCreate()
+    {
+        $cliente = new Cliente();
+        $endereco = new Endereco();
+        return view('cliente.form')
+            ->with('cliente', $cliente)
+            ->with('endereco', $endereco);
     }
 
     /**
@@ -79,6 +89,24 @@ class ClienteController extends Controller
      */
     public function store(ClienteRequest $request)
     {
+        $cliente_id = $request->get('cliente_id');
+        $mCliente = $cliente_id ? Cliente::find($cliente_id) : (new Cliente());
+        $mCliente->nome = $request->get('nome');
+        $mCliente->email = $request->get('email');
+        $mCliente->documento = $request->get('documento');
+        $mCliente->telefone = $request->get('telefone');
+        $cliente_id = $mCliente->save();
+
+        $endereco_id = $request->get('endereco_id');
+        $mEndereco = $cliente_id ? Endereco::find($endereco_id) : (new Endereco());
+        $mEndereco->uf = $request->get('uf');
+        $mEndereco->cidade = $request->get('cidade');
+        $mEndereco->cep = $request->get('cep');
+        $mEndereco->endereco = $request->get('endereco');
+        $mEndereco->bairro = $request->get('bairro');
+        $mEndereco->cliente_id = $cliente_id;
+        $mEndereco->save();
+
         return response()->json($request);
     }
 

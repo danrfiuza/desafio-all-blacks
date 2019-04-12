@@ -22,11 +22,14 @@ class Cliente extends Model
 
     public function getDocumentoAttribute()
     {
+        if (!isset($this->attributes['documento'])) {
+            return '';
+        }
         return vsprintf("%s%s%s.%s%s%s.%s%s%s-%s%s", str_split($this->attributes['documento']));
     }
 
     public function endereco()
     {
-        return $this->hasOne(Endereco::class,'cliente_id','id');
+        return $this->hasOne(Endereco::class, 'cliente_id', 'id');
     }
 }
