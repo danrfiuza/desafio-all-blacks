@@ -14,4 +14,4 @@
 Route::get('/', 'ClienteController@index');
 Route::post('listajson', 'ClienteController@listaClientesJson');
 Route::get('cliente/{cliente}', 'ClienteController@show');
-Route::post('cliente', 'ClienteController@store');
+Route::post('cliente/salvar', 'ClienteController@store');
