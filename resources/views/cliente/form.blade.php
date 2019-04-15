@@ -155,6 +155,14 @@
             form.find('input').removeClass('is-invalid');
 
         }).catch((jqXHR) => {
+            if (jqXHR.status === 500) {
+                Swal.fire(
+                    '',
+                    'Ocorreu um erro, entre em contato com o administrador do sistema.',
+                    'error'
+                );
+                return;
+            }
 
             let response = JSON.parse(jqXHR.responseText);
             form.find('input').removeClass('is-invalid');

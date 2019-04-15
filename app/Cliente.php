@@ -16,6 +16,7 @@ class Cliente extends Model
         'email',
         'ativo'
     ];
+
     protected $hidden = [
         '_token',
     ];

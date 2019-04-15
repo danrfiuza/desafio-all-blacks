@@ -31,8 +31,8 @@ class ClienteRequest extends FormRequest
             'cliente_id' => '',
             'endereco_id' => '',
             'nome' => 'required',
-            'email' =>'required|unique:clientes,email'.($cliente_id ? ",$cliente_id,id" : ''),
-            'documento' => 'required',
+            'email' => 'required|unique:clientes,email' . ($cliente_id ? ",$cliente_id,id" : ''),
+            'documento' => 'required|unique:clientes,documento' . ($cliente_id ? ",$cliente_id,id" : ''),
             'telefone' => '',
             'uf' => '',
             'cidade' => '',
@@ -45,17 +45,18 @@ class ClienteRequest extends FormRequest
     public function sanitize()
     {
         $input = $this->all();
-        $input['documento'] = str_replace(['.','-'],['',''],$input['documento']);
+        $input['documento'] = str_replace(['.', '-'], ['', ''], $input['documento']);
         $this->replace($input);
     }
 
     public function messages()
     {
         return [
-            'nome.required'  => 'Campo Nome é obrigatório',
-            'email.required' => 'Campo E-mail é obrigatório',
-            'email.unique'   => 'E-mail já cadastrado.',
-            'documento.required' => 'Campo Documento é obrigatório',
+            'nome.required' => 'Campo Nome é obrigatório.',
+            'email.required' => 'Campo E-mail é obrigatório.',
+            'email.unique' => 'E-mail já cadastrado.',
+            'documento.required' => 'Campo Documento é obrigatório.',
+            'documento.unique' => 'Já existe cliente cadastrado com este documento.',
         ];
     }
 }

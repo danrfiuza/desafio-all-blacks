@@ -18,4 +18,11 @@ Route::prefix('cliente')->group(function () {
     Route::get('{cliente}', 'ClienteController@show');
     Route::post('salvar', 'ClienteController@store');
 });
-Route::get('novo','ClienteController@formCreate');
+Route::get('novo', 'ClienteController@formCreate');
+
+Route::prefix('importacao')->group(function () {
+    Route::get('/', 'ArquivoImportacaoController@index');
+    Route::post('salvar', 'ArquivoImportacaoController@store');
+    Route::post('listajson', 'ArquivoImportacaoController@listaArquivosJson');
+    Route::get('importar/{arquivo_importacao}', 'ArquivoImportacaoController@importarArquivo');
+});

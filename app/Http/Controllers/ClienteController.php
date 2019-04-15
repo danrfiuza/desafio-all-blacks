@@ -6,6 +6,7 @@ use App\Cliente;
 use App\Endereco;
 use App\Http\Requests\ClienteRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ClienteController extends Controller
 {
@@ -89,23 +90,30 @@ class ClienteController extends Controller
      */
     public function store(ClienteRequest $request)
     {
-        $cliente_id = $request->get('cliente_id');
-        $mCliente = $cliente_id ? Cliente::find($cliente_id) : (new Cliente());
-        $mCliente->nome = $request->get('nome');
-        $mCliente->email = $request->get('email');
-        $mCliente->documento = $request->get('documento');
-        $mCliente->telefone = $request->get('telefone');
-        $cliente_id = $mCliente->save();
+        DB::beginTransaction();
+        try {
+            $cliente_id = $request->get('cliente_id') ?? null;
+            $mCliente = $cliente_id ? Cliente::find($cliente_id) : (new Cliente());
+            $mCliente->nome = $request->get('nome');
+            $mCliente->email = $request->get('email');
+            $mCliente->documento = $request->get('documento');
+            $mCliente->telefone = $request->get('telefone');
+            $cliente_id = $mCliente->save();
 
-        $endereco_id = $request->get('endereco_id');
-        $mEndereco = $cliente_id ? Endereco::find($endereco_id) : (new Endereco());
-        $mEndereco->uf = $request->get('uf');
-        $mEndereco->cidade = $request->get('cidade');
-        $mEndereco->cep = $request->get('cep');
-        $mEndereco->endereco = $request->get('endereco');
-        $mEndereco->bairro = $request->get('bairro');
-        $mEndereco->cliente_id = $cliente_id;
-        $mEndereco->save();
+            $endereco_id = $request->get('endereco_id') ?? null;
+            $mEndereco = $endereco_id ? Endereco::find($endereco_id) : (new Endereco());
+            $mEndereco->uf = $request->get('uf');
+            $mEndereco->cidade = $request->get('cidade');
+            $mEndereco->cep = $request->get('cep');
+            $mEndereco->endereco = $request->get('endereco');
+            $mEndereco->bairro = $request->get('bairro');
+            $mEndereco->cliente_id = $cliente_id;
+            $mEndereco->save();
+            DB::commit();
+        } catch (\Exception $e) {
+            Db::rollback();
+            return response()->json($e, 500);
+        }
 
         return response()->json($request);
     }
