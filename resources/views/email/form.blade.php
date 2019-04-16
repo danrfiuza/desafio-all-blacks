@@ -1,8 +1,6 @@
 @extends('template.principal')
 @section('main')
-    <form id="form-cliente">
-        <input type="hidden" name="cliente_id" value="{{($cliente->id??'')}}"/>
-        <input type="hidden" name="endereco_id" value="{{$endereco->id??''}}"/>
+    <form id="" action="/email/salvar" method="POST">
         {{csrf_field()}}
 
         <h3 class="bd-title">Enviar e-mail</h3>
@@ -23,10 +21,10 @@
 
         <div class="form-group">
             <label for="nome">Nome</label>
-            <div class="summernote">summernote 1</div>
+            <textarea class="summernote" name="email">summernote 1</textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary" id="btn-salvar-cliente">Submit</button>
+        <button type="submit" class="btn btn-primary" id="btn-salvar-cliente">Enviar <i class="fas fa-paper-plane"></i></button>
     </form>
     <script>
         $('.summernote').summernote({

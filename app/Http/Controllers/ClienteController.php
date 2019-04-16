@@ -115,7 +115,7 @@ class ClienteController extends Controller
             return response()->json(['msg' => 'Erro ao salvar cliente.'], 500);
         }
 
-        return response()->json($request);
+        return response()->json(['msg' => 'Torcedor salvo com sucesso.'],200);
     }
 
     /**

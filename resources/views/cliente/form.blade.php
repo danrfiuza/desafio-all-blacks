@@ -146,13 +146,13 @@
             url: 'cliente/salvar'
         }).then(res => {
             $('.modal').modal('hide');
-            carregarListagem();
             Swal.fire(
                 '',
-                'Torcedor salvo com sucesso.',
+                res.msg,
                 'success'
             );
             form.find('input').removeClass('is-invalid');
+            carregarListagem();
 
         }).catch((jqXHR) => {
             if (jqXHR.status === 500) {

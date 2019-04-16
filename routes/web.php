@@ -29,5 +29,5 @@ Route::prefix('importacao')->group(function () {
 
 Route::prefix('email')->group(function () {
     Route::get('/', 'EmailController@form');
-    Route::post('enviar', 'EmailController@send');
+    Route::post('salvar', 'EmailController@store');
 });
