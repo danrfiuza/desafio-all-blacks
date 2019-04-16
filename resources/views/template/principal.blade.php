@@ -29,6 +29,10 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/pt-br.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
+
     <script src="{{URL::asset('js/moment.js')}}"></script>
 </head>
 
@@ -54,6 +58,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item text-dark" href="/importacao">Importar Torcedores</a>
+                    <a class="dropdown-item text-dark" href="/email">Enviar E-mail</a>
                 </div>
             </li>
         </ul>

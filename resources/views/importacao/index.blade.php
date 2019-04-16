@@ -1,13 +1,23 @@
 @extends('template.principal')
 @section('main')
-    <div class="row mb-2">
-        @if(isset($message))
-            <div class="alert alert-success" role="alert">
-                This is a success alert—check it out!
-            </div>
-        @endif
-    </div>
+
     <div class="card col-4">
+        <div class="row col-12">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            @if(isset($mensagem))
+                <div class="alert alert-success" role="alert">
+                    This is a success alert—check it out!
+                </div>
+            @endif
+        </div>
         <div class="card-body">
             <form id="form-cliente" action="/importacao/salvar" method="POST" enctype="multipart/form-data">
                 {{csrf_field()}}
@@ -83,7 +93,7 @@
                                 </button>
                              `;
                             }
-
+                            return '';
                         }
                     },
                     {"data": "nome_original"},
@@ -95,12 +105,12 @@
                     },
                     {
                         "data": "created_at", render: (data, type, row, meta) => {
-                            return moment(data).format('DD/MM/YYYY');
+                            return moment(data).format('DD/MM/YYYY H:mm:ss');
                         }
                     },
                     {
                         "data": "updated_at", render: (data, type, row, meta) => {
-                            return moment(data).format('DD/MM/YYYY');
+                            return moment(data).format('DD/MM/YYYY H:mm:ss');
                         }
                     },
                 ]
@@ -113,10 +123,10 @@
             $.ajax({
                 type: 'GET',
                 url: `/importacao/importar/${id}`,
-            }).then(() => {
-
-            }).catch(() => {
-
+            }).then((res) => {
+                console.log(res);
+            }).catch((err) => {
+                console.log(err);
             });
         });
 

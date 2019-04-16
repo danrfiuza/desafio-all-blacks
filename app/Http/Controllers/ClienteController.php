@@ -111,8 +111,8 @@ class ClienteController extends Controller
             $mEndereco->save();
             DB::commit();
         } catch (\Exception $e) {
-            Db::rollback();
-            return response()->json($e, 500);
+            DB::rollback();
+            return response()->json(['msg' => 'Erro ao salvar cliente.'], 500);
         }
 
         return response()->json($request);

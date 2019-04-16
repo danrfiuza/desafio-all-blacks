@@ -26,3 +26,8 @@ Route::prefix('importacao')->group(function () {
     Route::post('listajson', 'ArquivoImportacaoController@listaArquivosJson');
     Route::get('importar/{arquivo_importacao}', 'ArquivoImportacaoController@importarArquivo');
 });
+
+Route::prefix('email')->group(function () {
+    Route::get('/', 'EmailController@form');
+    Route::post('enviar', 'EmailController@send');
+});

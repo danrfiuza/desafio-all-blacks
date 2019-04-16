@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ArquivoImportacao;
+use App\Http\Requests\ArquivoImportacaoRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -52,7 +53,12 @@ class ArquivoImportacaoController extends Controller
 
     public function importarArquivo(ArquivoImportacao $arquivoImportacao)
     {
-        $arquivoImportacao->importarClientes();
+        $resposta = $arquivoImportacao->importarClientes();
+        if ($resposta == ArquivoImportacao::SUCESSO) {
+            return response()->json(['Arquivo Processado com sucesso'], 200);
+        }
+        return response()->json(['Falha ao processar arquivo'], 200);
+
     }
 
     /**
@@ -71,7 +77,7 @@ class ArquivoImportacaoController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ArquivoImportacaoRequest $request)
     {
         $arquivo = $request->file('arquivo');
         $nomeArquivo = time() . $arquivo->getClientOriginalName();
