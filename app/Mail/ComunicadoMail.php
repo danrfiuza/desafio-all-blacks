@@ -11,14 +11,18 @@ class ComunicadoMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    private $body = null;
+    private $cliente = null;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($body,$cliente)
     {
-        //
+        $pattern = ['{nome}', '{email}'];
+        $replace = [$cliente->nome, $cliente->email];
+        $this->body = str_replace($pattern, $replace, $body);
     }
 
     /**
@@ -28,6 +32,6 @@ class ComunicadoMail extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->view('email.clientemail')->with('body', $this->body);
     }
 }

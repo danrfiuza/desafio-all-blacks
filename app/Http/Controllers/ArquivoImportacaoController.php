@@ -31,15 +31,12 @@ class ArquivoImportacaoController extends Controller
         $order = $columns[$request->input('order.0.column')];
         $dir = $request->input('order.0.dir');
 
-        $search = $request->input('search.value');
-
         $clienteQuery = ArquivoImportacao::offset($start)
             ->limit($limit)
             ->orderBy($order, $dir)
             ->select($columns);
 
         $clientes = $clienteQuery->get();
-
 
         $json_data = array(
             "draw" => intval($request->input('draw')),
