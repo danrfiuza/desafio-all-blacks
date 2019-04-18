@@ -17,6 +17,7 @@ Route::post('listajson', 'ClienteController@listaClientesJson');
 Route::prefix('cliente')->group(function () {
     Route::get('{cliente}', 'ClienteController@show');
     Route::post('salvar', 'ClienteController@store');
+    Route::get('deletar/{cliente}', 'ClienteController@destroy');
 });
 Route::get('novo', 'ClienteController@formCreate');
 

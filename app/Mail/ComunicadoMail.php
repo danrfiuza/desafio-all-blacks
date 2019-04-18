@@ -20,8 +20,14 @@ class ComunicadoMail extends Mailable
      */
     public function __construct($body,$cliente)
     {
-        $pattern = ['{nome}', '{email}'];
-        $replace = [$cliente->nome, $cliente->email];
+        $pattern = ['{nome}', '{email}','{uf}','{cidade}','{endereco}'];
+        $replace = [
+            $cliente->nome,
+            $cliente->email,
+            $cliente->endereco->uf,
+            $cliente->endereco->cidade,
+            $cliente->endereco->endereco,
+        ];
         $this->body = str_replace($pattern, $replace, $body);
     }
 

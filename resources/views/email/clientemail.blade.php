@@ -1,3 +1,3 @@
 <html>
-{{htmlspecialchars_decode($body)}}
+{!! $body !!}
 </html>

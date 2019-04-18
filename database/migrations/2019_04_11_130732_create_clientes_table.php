@@ -21,6 +21,7 @@ class CreateClientesTable extends Migration
             $table->string('email', 255)->nullable();
             $table->boolean('ativo')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

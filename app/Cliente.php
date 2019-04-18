@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cliente extends Model
 {
+    use SoftDeletes;
+
     public $timestamps = true;
     public $table = 'clientes';
     protected $primaryKey = 'id';
@@ -16,6 +19,8 @@ class Cliente extends Model
         'email',
         'ativo'
     ];
+
+    protected $dates = ['deleted_at'];
 
     protected $hidden = [
         '_token',

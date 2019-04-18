@@ -1,14 +1,17 @@
 @extends('template.principal')
 @section('main')
-    <h1 class="bd-title" id="content">Lista de Torcedores</h1>
-    <button
-            class="btn btn-success"
-            data-toggle="modal"
-            data-target=".bd-example-modal-lg"
-            id="btn-incluir"
-    >
-        <i class="fas fa-plus"></i>
-    </button>
+    <h1 class="bd-title" id="content">Lista de Torcedores
+        <button
+                title="Adicionar Novo torcedor"
+                class="btn btn-success"
+                data-toggle="modal"
+                data-target=".bd-example-modal-lg"
+                id="btn-incluir"
+        >
+            <i class="fas fa-user-plus"></i>
+        </button>
+    </h1>
+
 
     <div class="table-responsive">
 
@@ -40,9 +43,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <p>Modal body text goes here.</p>
-                </div>
+                <div class="modal-body"></div>
             </div>
         </div>
     </div>
@@ -107,7 +108,27 @@
         });
 
         $(document).on('click', '.remover', function () {
-            console.log($(this).attr('id'));
+            let id = $(this).attr('id');
+            Swal.fire({
+                title: 'Tem certeza?',
+                text: "Você deseja mesmo excluir este torcedor?",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.value) {
+                    $.get(`cliente/deletar/${id}`)
+                        .then((res) => {
+                            Swal.fire('Torcedor Deletado', '', 'success');
+                            carregarListagem();
+                        }).catch((err) => {
+                        Swal.fire('Ocorreu um erro.', '', 'error');
+                    });
+                }
+            });
         });
 
         $('#btn-incluir').click(() => {

@@ -24,7 +24,7 @@ class ArquivoImportacaoRequest extends FormRequest
     public function rules()
     {
         return [
-            'arquivo' => 'required|mimes:xml'
+            'arquivo' => 'required'
         ];
     }
 
