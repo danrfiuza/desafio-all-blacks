@@ -2,22 +2,20 @@
 @section('main')
 
     <div class="card col-4">
-        <div class="row col-12">
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            @if(isset($mensagem))
-                <div class="alert alert-success" role="alert">
-                    This is a success alert—check it out!
-                </div>
-            @endif
-        </div>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        @if(isset($mensagem))
+            <div class="alert alert-success" role="alert">
+                This is a success alert—check it out!
+            </div>
+        @endif
         <div class="card-body">
             <form id="form-cliente" action="/importacao/salvar" method="POST" enctype="multipart/form-data">
                 {{csrf_field()}}
@@ -119,14 +117,19 @@
         }
 
         $(document).on('click', '.importar', function () {
+            loading();
             let id = $(this).attr('id');
             $.ajax({
                 type: 'GET',
                 url: `/importacao/importar/${id}`,
             }).then((res) => {
-                console.log(res);
+                loading();
+                Swal.fire(res.msg, '', 'success').then(() => {
+                    carregarListagem();
+                });
             }).catch((err) => {
-                console.log(err);
+                loading();
+                Swal.fire(err, '', 'error');
             });
         });
 

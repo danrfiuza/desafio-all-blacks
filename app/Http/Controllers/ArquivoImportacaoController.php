@@ -52,7 +52,7 @@ class ArquivoImportacaoController extends Controller
     {
         $resposta = $arquivoImportacao->importarClientes();
         if ($resposta == ArquivoImportacao::SUCESSO) {
-            return response()->json(['Arquivo Processado com sucesso'], 200);
+            return response()->json(['msg' => 'Arquivo Processado com sucesso'], 200);
         }
         return response()->json(['Falha ao processar arquivo'], 200);
 

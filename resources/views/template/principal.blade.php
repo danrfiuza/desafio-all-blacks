@@ -71,7 +71,42 @@
 </nav>
 
 <main class="col-10 py-md-3 container" role="main">
+    <div
+            id='loading'
+            style='
+            position:fixed;
+            height:100%;
+            width:100%;
+            overflow:hidden;
+            top:0;
+            left:0;
+            background-color: darkgrey;
+            z-index:99999999;
+            opacity: .9;
+            display: none;
+        '
+    >
+        <div
+                class=""
+                style="
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            "
+        >
+            <div class="fa-5x">
+                <i class="fas fa-cog fa-spin"></i>
+            </div>
+            Processando arquivo.Aguarde.
+        </div>
+    </div>
     @yield('main')
 </main>
 </body>
+<script>
+    function loading() {
+        $('#loading').toggle();
+    }
+</script>
 </html>
