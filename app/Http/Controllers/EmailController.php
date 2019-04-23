@@ -27,28 +27,24 @@ class EmailController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Envia e-mails para todos os torcedores
      *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function enviar(Request $request)
     {
-        foreach (Cliente::all() as $cliente) {
-            $corpoEmail = $request->get('email');
-
-            return new ComunicadoMail($corpoEmail,$cliente);
-
-            Mail::to($cliente->email)->send($mComunicadoMail);
-
-            Mail::raw('You have successfully created your account on CTFlor website', function ($message) use ($cliente) {
-                $message
-                    ->to($cliente->email, $cliente->nome)
-                    ->subject('CTFlor Website - Registration');
-            });
-            break;
+        try{
+            foreach (Cliente::all() as $cliente) {
+                $corpoEmail = $request->get('email');
+                $mComunicadoMail = new ComunicadoMail($corpoEmail,$cliente);
+                Mail::to($cliente->email)->send($mComunicadoMail);
+                break;
+            }
+            return redirect()->back()->with('success', 'E-mails enviados com sucesso');
+        }catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Ocorreu um erro ao enviar os e-mails');
         }
-        dd(Mail::failures());
     }
 
     /**

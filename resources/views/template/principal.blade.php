@@ -98,14 +98,17 @@
             <div class="fa-5x">
                 <i class="fas fa-cog fa-spin"></i>
             </div>
-            Processando arquivo.Aguarde.
+            <span id="mensagem-loading"></span>
         </div>
     </div>
     @yield('main')
 </main>
 </body>
 <script>
-    function loading() {
+    function loading(mensagem = 'Processando arquivo.Aguarde.') {
+        if(mensagem) {
+            $('#mensagem-loading').html(mensagem);
+        }
         $('#loading').toggle();
     }
 </script>
