@@ -39,7 +39,6 @@ class EmailController extends Controller
                 $corpoEmail = $request->get('email');
                 $mComunicadoMail = new ComunicadoMail($corpoEmail,$cliente);
                 Mail::to($cliente->email)->send($mComunicadoMail);
-                break;
             }
             return redirect()->back()->with('success', 'E-mails enviados com sucesso');
         }catch (\Exception $e) {

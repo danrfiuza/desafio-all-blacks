@@ -9,7 +9,7 @@ https://gist.githubusercontent.com/p21sistemas/c66b07bb0c30de898642aeb0f9fdb4f0/
 
 ## Solução desenvolvida:
 
-### Requisitos para instalar a solução:
+### Requisitos de instalação da solução:
 * PHP >= 7.1
 * MySQL
 * Laravel >= 5.7
@@ -18,10 +18,45 @@ https://gist.githubusercontent.com/p21sistemas/c66b07bb0c30de898642aeb0f9fdb4f0/
 * cd desafio-all-blacks
 * composer install
   * Instala as dependências necessárias para executar o projeto.
+* cp .env.example .env
+* php artisan key:generate
+  * Exemplo de configuração do arquivo .env:
+  ```
+    APP_ENV=local
+    APP_KEY=
+    APP_DEBUG=true
+    APP_URL=http://localhost
+
+    LOG_CHANNEL=stack
+
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=desafiop21
+    DB_USERNAME=admin
+    DB_PASSWORD=admin
+
+    BROADCAST_DRIVER=log
+    CACHE_DRIVER=file
+    SESSION_DRIVER=file
+    SESSION_LIFETIME=120
+    QUEUE_DRIVER=sync
+
+    MAIL_DRIVER=smtp
+    MAIL_HOST=smtp.mailtrap.io
+    MAIL_PORT=2525
+    MAIL_USERNAME=<username>
+    MAIL_PASSWORD=<password>
+    MAIL_FROM_ADDRESS=<emailfrom>
+    MAIL_FROM_NAME=<name>
+  ```
 * php artisan migrate/migrate:refresh
   * Realiza a migração das tabelas a serem criadas/faz o drop das tabelas e refaz a migração
-* php artisan import:planilha-clientes 
+* php artisan db:seed --class=UfTableSeeder
+  * Realiza carga das UFs
+* php artisan import:planilha-clientes
   * Importa dados contidos na planilha clientes.xlsx e normaliza para as tabelas clientes e endereços (arquivo localizado na pasta storage)
+  * Utilizado a biblioteca laravel-excel https://laravel-excel.com/
 * Configurar serviço de smtp em .env ou config/mail.php
   * utilizei o mailtrap para demonstar o envio de emails https://mailtrap.io/
 
@@ -31,7 +66,7 @@ https://gist.githubusercontent.com/p21sistemas/c66b07bb0c30de898642aeb0f9fdb4f0/
 ### Importação dos dados da planilha clientes.xlsx:
 <p align="center"><img src="https://drive.google.com/uc?export=view&id=1nl6prLbA0PUGjsruTNs11NcjCi_edL1f"></p>
 
-### Tela inicial:
+### Tela inicial com CRUD de torcedores:
 <p align="center"><img src="https://drive.google.com/uc?export=view&id=1teUYuOZqUG0JkTb68koM40U78L4fg02E"></p>
 
 ### Tela de importação de clientes (XML):

@@ -64,14 +64,18 @@
 
     <div class="form-group">
         <label for="uf">UF</label>
-        <input
-                type="text"
-                class="form-control form-control-sm"
-                id="uf"
-                placeholder="Informe Unidade Federativa"
-                name="uf"
-                value="{{$endereco->uf??''}}"
-        />
+        <select
+            class="form-control form-control-sm"
+            placeholder="Informe Unidade Federativa"
+            name="uf"
+            id="uf"
+        >
+            @foreach($arUf as $uf)
+            <option value="{{$uf->uf}}" {{($endereco->uf??'') == $uf->uf?'selected':''}}>
+                {{$uf->uf.' - '.$uf->nome}}
+            </option>
+            @endforeach
+        </select>
         <div class="invalid-feedback" id="erros-uf">
         </div>
     </div>

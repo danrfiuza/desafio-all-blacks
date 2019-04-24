@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Cliente;
 use App\Endereco;
 use App\Http\Requests\ClienteRequest;
+use App\Uf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -76,9 +77,11 @@ class ClienteController extends Controller
     {
         $cliente = new Cliente();
         $endereco = new Endereco();
+        $arUf = Uf::all();
         return view('cliente.form')
             ->with('cliente', $cliente)
-            ->with('endereco', $endereco);
+            ->with('endereco', $endereco)
+            ->with('arUf', $arUf);
     }
 
     /**
@@ -112,7 +115,7 @@ class ClienteController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            return response()->json(['msg' => 'Erro ao salvar cliente.'], 500);
+            return response()->json(['msg' => 'Erro ao salvar Torcedor.'], 500);
         }
 
         return response()->json(['msg' => 'Torcedor salvo com sucesso.'],200);
@@ -128,7 +131,9 @@ class ClienteController extends Controller
     public function show(Cliente $cliente)
     {
         $endereco = $cliente->endereco;
+        $arUf = Uf::all();
         return view('cliente.form')
+            ->with('arUf', $arUf)
             ->with('cliente', $cliente)
             ->with('endereco', $endereco);
     }
