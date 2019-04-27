@@ -25,4 +25,4 @@ https://gist.githubusercontent.com/p21sistemas/c66b07bb0c30de898642aeb0f9fdb4f0/
 
 
 Tela inicial:
-<p align="center"><img src="(https://drive.google.com/file/d/1teUYuOZqUG0JkTb68koM40U78L4fg02E/view?usp=sharing)"></p>
+<p align="center"><img src="(https://drive.google.com/uc?export=view&id=1teUYuOZqUG0JkTb68koM40U78L4fg02E)"></p>
