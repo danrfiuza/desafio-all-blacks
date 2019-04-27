@@ -17,13 +17,13 @@
             </div>
         @endif
         <div class="card-body">
-            <form id="form-cliente" action="/importacao/salvar" method="POST" enctype="multipart/form-data">
+            <form id="form-importacao-arquivo" action="/importacao/salvar" method="POST" enctype="multipart/form-data">
                 {{csrf_field()}}
                 <div class="form-group">
                     <label for="arquivo">Arquivo</label>
                     <input type="file" class="form-control-file" id="arquivo" name="arquivo">
                 </div>
-                <button type="submit" class="btn btn-primary" id="btn-salvar-cliente">Salvar Arquivo</button>
+                <button type="submit" class="btn btn-primary" id="btn-salvar-arquivo">Salvar Arquivo</button>
             </form>
         </div>
     </div>
@@ -57,6 +57,13 @@
     </div>
 
     <script>
+
+        $('#btn-salvar-arquivo').on('click',(evt) => {
+            evt.preventDefault();
+            loading('Salvando arquivo, aguarde...');
+            $('#form-importacao-arquivo').submit();
+        });
+
         $(document).ready(function () {
             carregarListagem();
         });
