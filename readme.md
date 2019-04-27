@@ -17,10 +17,12 @@ https://gist.githubusercontent.com/p21sistemas/c66b07bb0c30de898642aeb0f9fdb4f0/
 ### Passos para executar a aplicação
 * cd desafio-all-blacks
 * composer install
+  * Instala as dependências necessárias para executar o projeto.
 * php artisan migrate
+  * Realiza a migração das tabelas a serem criadas
 * php artisan import:planilha-clientes 
   * Importa dados contidos na planilha clientes.xlsx e normaliza para as tabelas clientes e endereços (arquivo localizado na pasta storage)
 
 
 Tela inicial:
-<p align="center"><img src="(readme-files/index.png)"></p>
+<p align="center"><img src="(https://drive.google.com/file/d/1teUYuOZqUG0JkTb68koM40U78L4fg02E/view?usp=sharing)"></p>
